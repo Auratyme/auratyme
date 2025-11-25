@@ -1,0 +1,33 @@
+services:
+  jobs:
+    build:
+      context: ../../
+      dockerfile: ./microservices/jobs/Dockerfile
+      target: dev
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/src/app/microservices/jobs/src
+      - ./test:/usr/src/app/microservices/jobs/test
+      - ../../libs/ts:/usr/src/app/libs/ts
+    depends_on:
+      jobs-db:
+        condition: service_healthy
+    healthcheck:
+      test: node ./healthcheck.js
+      timeout: 10s
+      start_period: 15s
+    ports:
+      - 3003:5000
+
+  jobs-db:
+    build:
+      context: ./database
+    env_file:
+      - ./database/.env
+    volumes:
+      - jobs-db-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+volumes:
+  jobs-db-data:

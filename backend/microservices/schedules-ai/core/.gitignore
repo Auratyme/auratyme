@@ -1,0 +1,8 @@
+data/processed/
+*.log
+logs/
+__pycache__/
+*.pyc
+.env
+.env.dev
+.env.local

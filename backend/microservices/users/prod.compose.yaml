@@ -1,0 +1,31 @@
+services:
+  users:
+    build:
+      context: ../../
+      target: prod
+      dockerfile: ./microservices/users/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      users-db:
+        condition: service_healthy
+    healthcheck:
+      test: node ./healthcheck.js
+      timeout: 10s
+      start_period: 15s
+
+  users-db:
+    build:
+      context: ./database
+    env_file:
+      - ./database/.env
+    volumes:
+      - users-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      timeout: 30s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  users-db-data:

@@ -1,0 +1,98 @@
+services:
+  schedules-ai:
+    build:
+      context: ../..
+      dockerfile: ./microservices/schedules-ai/core/Dockerfile
+      target: dev
+    env_file:
+      - ./core/.env
+    volumes:
+      - ./core/data:/app/data
+      - ./core/logs:/app/logs
+      - ./core/api:/app/api
+    ports:
+      - '8000:8000'
+    environment:
+      - ENABLE_JWT_AUTH=true
+      - DISABLE_DB=false
+    depends_on:
+      schedules-ai-db:
+        condition: service_healthy
+      # broker:
+      #   condition: service_healthy
+    healthcheck:
+      test: curl localhost:8000/health || exit 1
+      timeout: 10s
+      start_period: 30s
+
+  schedules-ai-grpc:
+    build:
+      context: ../..
+      dockerfile: ./microservices/schedules-ai/core/Dockerfile
+      target: dev
+    env_file:
+      - ./core/.env
+    command: python grpc_server_with_scheduler.py
+    ports:
+      - '50051:50051'
+    environment:
+      - PYTHONPATH=/app/src:/app
+    depends_on:
+      schedules-ai:
+        condition: service_healthy
+
+  schedules-ai-db:
+    build:
+      context: ./database
+    env_file:
+      - ./database/.env
+    volumes:
+      - schedules-ai-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      timeout: 30s
+      retries: 5
+      start_period: 20s
+
+  schedules-ai-gateway:
+    build:
+      context: ./gateway
+      target: dev
+    profiles: [gateway]
+    env_file:
+      - ./gateway/.env
+    volumes:
+      - type: bind
+        source: ./gateway/etc/nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: ./gateway/etc/nginx/proxy_params.conf
+        target: /etc/nginx/proxy_params.conf
+      - ./gateway/html:/usr/share/nginx/html
+    ports:
+      - 4002:80
+    depends_on:
+      schedules-ai:
+        condition: service_healthy
+
+  analytics-center:
+    build:
+      context: ../..
+      dockerfile: ./microservices/schedules-ai/core/Dockerfile
+      target: dev
+    depends_on:
+      schedules-ai:
+        condition: service_healthy
+    environment:
+      - API_BASE_URL=http://schedules-ai:8000
+      - DEMO_MODE=false
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - STREAMLIT_SERVER_ENABLE_CORS=false
+    command: bash -c "streamlit run analytics_center/app/Main.py --server.port 8501 --server.address 0.0.0.0 --browser.gatherUsageStats=false"
+    volumes:
+      - ./analytics_center:/app/analytics_center
+    ports:
+      - 8501:8501
+
+volumes:
+  schedules-ai-db-data:

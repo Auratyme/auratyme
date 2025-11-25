@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This repository holds backend for auratyme project (ai, apis, etc)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Auratyme/auratyme-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Auratyme/auratyme-backend/issues"
+  },
+  "homepage": "https://github.com/Auratyme/auratyme-backend#readme",
+  "workspaces": [
+    "libs/ts/common",
+    "libs/ts/contracts",
+    "microservices/schedules",
+    "microservices/notifications",
+    "microservices/jobs",
+    "microservices/users",
+    "microservices/api-gateway"
+  ],
+  "devDependencies": {
+    "ts-proto": "^2.8.3"
+  }
+}

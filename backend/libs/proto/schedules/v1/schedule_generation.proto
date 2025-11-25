@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package schedule_generation;
+
+// ============================================================================
+// SCHEDULE GENERATION SERVICE - Complete scheduler fields
+// ============================================================================
+
+message TaskInput {
+  string id = 1;
+  string name = 2;
+  int32 duration_minutes = 3;
+  int32 priority = 4;
+  optional string deadline = 5;
+}
+
+message FixedEventInput {
+  string id = 1;
+  string name = 2;
+  string start_time = 3;  // Format: "HH:MM:SS"
+  string end_time = 4;    // Format: "HH:MM:SS"
+}
+
+message MealPreferences {
+  bool lunch_enabled = 1;
+  int32 lunch_duration = 2;
+}
+
+message RoutinePreferences {
+  int32 morning_routine_minutes = 1;
+  int32 evening_routine_minutes = 2;
+  bool enable_afternoon_break = 3;
+  int32 afternoon_break_minutes = 4;
+}
+
+message WorkHours {
+  string start = 1;  // Format: "HH:MM"
+  string end = 2;    // Format: "HH:MM"
+  string work_type = 3;  // "remote", "office", or "hybrid"
+  int32 commute_minutes = 4;  // Commute duration in minutes (only for office/hybrid)
+}
+
+message SchedulePreferences {
+  bool rounding = 1;
+  MealPreferences meals = 2;
+  RoutinePreferences routines = 3;
+  WorkHours work = 4;
+}
+
+message UserProfile {
+  int32 meq_score = 1;
+  int32 age = 2;
+  string sleep_need = 3;
+}
+
+message ScheduleGenerationRequest {
+  string user_id = 1;
+  string target_date = 2;
+  repeated TaskInput tasks = 3;
+  repeated FixedEventInput fixed_events = 4;
+  SchedulePreferences preferences = 5;
+  UserProfile user_profile = 6;
+}
+
+message ScheduledItem {
+  string id = 1;
+  string type = 2;
+  string name = 3;
+  string start_time = 4;
+  string end_time = 5;
+}
+
+message ScheduleGenerationResponse {
+  string message = 1;
+  string schedule_id = 2;
+  string user_id = 3;
+  repeated ScheduledItem scheduled_items = 4;
+}
+
+service ScheduleGenerationService {
+  rpc GenerateSchedule(ScheduleGenerationRequest) returns (ScheduleGenerationResponse) {}
+}

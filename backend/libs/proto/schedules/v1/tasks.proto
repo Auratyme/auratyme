@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package task;
+
+enum SortType {
+  ASC = 0;
+  DESC = 1;
+}
+
+message Task {
+  string id = 1;
+  string userId = 2;
+  string scheduleId = 3;
+  string name = 4;
+  string description = 5;
+  TaskStatus status = 6;
+  string dueTo = 7;
+  string repeat = 8;
+  string createdAt = 9;
+  string updatedAt = 10;
+  int32 priority = 11;
+  bool fixed = 12;
+  string startTime = 13;
+  string endTime = 14;
+}
+message TaskEvent {
+  string eventName = 1;
+  EventPayload payload = 2;
+}
+
+enum TaskStatus {
+  NOT_STARTED = 0;
+  IN_PROGRESS = 1;
+  DONE = 2;
+  FAILED = 3;
+}
+enum TasksOrderBy {
+  NAME = 0;
+  CREATED_AT = 1;
+  UPDATED_AT = 2;
+  DUE_TO = 3;
+  STATUS = 4;
+}
+
+message EventFields {
+  string id = 1;
+  string userId = 2;
+}
+message EventPayload {
+  EventFields task = 1;
+}
+
+message FindWhere {
+  optional string userId = 1;
+}
+message FindOptions {
+  optional uint32 limit = 1;
+  optional uint32 page = 2;
+  optional TasksOrderBy orderBy = 3;
+  optional SortType sortBy = 4;
+}
+
+message FindOneWhere {
+  string id = 1;
+  optional string userId = 2;
+}
+
+message UpdateWhere {
+  string id = 1;
+  optional string userId = 2;
+}
+message UpdateFields {
+  optional string name = 1;
+  optional string description = 2;
+  optional TaskStatus status = 3;
+  optional string dueTo = 4;
+  optional string repeat = 5;
+  optional string scheduleId = 6;
+  optional int32 priority = 7;
+  optional bool fixed = 8;
+  optional string startTime = 9;
+  optional string endTime = 10;
+}
+
+message RemoveWhere {
+  string id = 1;
+  optional string userId = 2;
+}
+
+service TasksService {
+  rpc Events(TaskEventsRequest) returns (stream TaskEvent) {}
+
+  rpc Find(TasksFindRequest) returns (TasksFindResponse) {}
+
+  rpc FindOne(TaskFindOneRequest) returns (Task) {}
+
+  rpc Create(TaskCreateRequest) returns (Task) {}
+
+  rpc Update(TaskUpdateRequest) returns (Task) {}
+
+  rpc Remove(TaskRemoveRequest) returns (Task) {}
+}
+
+message TaskEventsRequest {
+  string userId = 1;
+}
+
+message TasksFindRequest {
+  optional FindOptions options = 1;
+  optional FindWhere where = 2;
+}
+message TasksFindResponse {
+  repeated Task tasks = 1;
+}
+
+message TaskFindOneRequest {
+  FindOneWhere where = 1;
+}
+
+message TaskCreateRequest {
+  string name = 1;
+  string userId = 2;
+  string scheduleId = 3;
+  optional string description = 4;
+  optional string repeat = 5;
+  optional string dueTo = 6;
+  optional TaskStatus status = 7;
+  optional int32 priority = 8;
+  optional bool fixed = 9;
+  optional string startTime = 10;
+  optional string endTime = 11;
+}
+
+message TaskUpdateRequest {
+  UpdateFields where = 1;
+  optional UpdateFields fields = 2;
+  
+}
+
+message TaskRemoveRequest {
+  RemoveWhere where = 1;
+}

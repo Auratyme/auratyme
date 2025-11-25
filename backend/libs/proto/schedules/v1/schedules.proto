@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package schedule;
+
+enum SortType {
+  ASC = 0;
+  DESC = 1;
+}
+
+message Schedule {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string userId = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+}
+
+enum SchedulesOrderBy {
+  NAME = 0;
+  CREATED_AT = 1;
+  UPDATED_AT = 2;
+}
+
+message FindWhere {
+  optional string userId = 1;
+}
+message FindOptions {
+  optional uint32 limit = 1;
+  optional uint32 page = 2;
+
+  optional SchedulesOrderBy orderBy = 3;
+  optional SortType sortBy = 4;
+}
+
+message FindOneWhere {
+  string id = 1;
+}
+
+message UpdateWhere {
+  string id = 1;
+  optional string userId = 2;
+}
+message UpdateFields {
+  optional string name = 1;
+  optional string description = 2;
+}
+
+message RemoveWhere {
+  string id = 1;
+  optional string userId = 2;
+}
+message RemoveOptions {
+  optional bool force = 1;
+}
+
+service SchedulesService {
+  rpc Find(SchedulesFindRequest) returns (SchedulesFindResponse) {}
+
+  rpc FindOne(SchedulesFindOneRequest) returns (Schedule) {}
+
+  rpc Create(SchedulesCreateRequest) returns (Schedule) {}
+
+  rpc Update(SchedulesUpdateRequest) returns (Schedule) {}
+
+  rpc Remove(SchedulesRemoveRequest) returns (Schedule) {}
+}
+
+message SchedulesFindRequest {
+  optional FindOptions options = 1;
+  optional FindWhere where = 2;
+}
+message SchedulesFindResponse {
+  repeated Schedule schedules = 1;
+}
+
+message SchedulesFindOneRequest {
+  FindOneWhere where = 1;
+}
+
+message SchedulesCreateRequest {
+  string name = 1;
+  string description = 2;
+  string userId = 3;
+}
+
+message SchedulesUpdateRequest {
+  UpdateWhere where = 1;
+  optional UpdateFields fields = 2;
+}
+
+message SchedulesRemoveRequest {
+  RemoveWhere where = 1;
+  optional RemoveOptions options = 2;
+}

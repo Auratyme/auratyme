@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package sleep_record;
+
+service SleepRecordsService {
+  rpc Test(TestRequest) returns (TestRespone) {}
+}
+
+message TestRequest {
+  string id = 1;
+}
+message TestRespone {
+  string id = 1;
+}

@@ -1,0 +1,17 @@
+version: v2
+plugins:
+  - local: ../../node_modules/ts-proto/protoc-gen-ts_proto
+    out: ./gen/ts
+    strategy: all
+    opt:
+      - nestJs=true
+      - outputServices=false
+      - useExactTypes=false
+      - esModuleInterop=true
+      - unrecognizedEnum=false
+      - removeEnumPrefix=true
+      - outputEncodeMethods=false
+      - outputJsonMethods=false
+      - returnObservable=true
+      - outputClientImpl=false
+      - onlyTypes=true

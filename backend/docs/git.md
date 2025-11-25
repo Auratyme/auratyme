@@ -1,0 +1,3 @@
+# Branching & merging strategy
+
+Branching strategy that is used for this repository is called GitFlow. For more information read this [article](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), but in summary there are 2 main branches, which are main (master) and develop (in this repo develpment). Main only contains tested code, ready for deployment, while development contains latest features to be tested and then merged into main. Each feature requires it's own feature branch and is regularly rebased with develop so it contains up-to-date code. Develop is rebased with main. There can be also hotfix branches, which contain fixed to critical bugs and are merged directly with main.

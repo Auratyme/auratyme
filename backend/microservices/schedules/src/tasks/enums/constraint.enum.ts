@@ -1,0 +1,10 @@
+export const TaskConstraint = {
+  MAX_NAME_LENGTH: 255,
+  MAX_DESCRIPTION_LENGTH: 512,
+  MAX_REPEAT_LENGTH: 128,
+  MAX_USER_ID_LENGTH: 255,
+  DEFAULT_ORDER_BY: 'createdAt',
+  DEFAULT_SORT_BY: 'desc',
+  PAGINATION_LIMIT: 100,
+  DEFAULT_PAGE: 0,
+} as const;

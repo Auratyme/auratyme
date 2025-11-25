@@ -1,0 +1,119 @@
+# --- Logging ---
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+# --- API Server ---
+server:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost"
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+
+# --- LLM Engine ---
+llm:
+  provider: "openrouter"
+  model_name: "mistralai/mixtral-8x7b-instruct"
+  temperature: 0.7
+  max_tokens: 1500
+  top_p: 0.9
+  max_retries: 3
+  retry_delay: 1.0
+  site_url: "https://auratyme.com"
+  site_name: "Auratyme"
+
+# --- Sleep Calculator ---
+sleep:
+  sleep_guidelines:
+    teen: [8.0, 10.0]
+    young_adult: [7.0, 9.0]
+    adult: [7.0, 9.0]
+    senior: [7.0, 8.0]
+  chronotype_adjustments:
+    EARLY_BIRD: -1.0
+    NIGHT_OWL: 1.0
+    INTERMEDIATE: 0.0
+  sleep_cycle_duration_minutes: 90
+  sleep_onset_minutes: 15
+  max_sleep_need_adjustment_hours: 1.0
+  quality_score_weights:
+    duration: 0.4
+    timing: 0.3
+    physiological: 0.3
+  duration_tolerance_minutes: 30
+  duration_penalty_range_minutes: 90
+  timing_tolerance_minutes: 30
+  timing_penalty_range_minutes: 90
+  hr_target_min: 40
+  hr_target_max: 60
+  hrv_target_avg: 50
+
+# --- Chronotype Analyzer ---
+chronotype:
+  sleep_data_min_records: 7
+  midsleep_threshold_early: 3.5
+  midsleep_threshold_late: 5.5
+  confidence_variance_scale: 4.0
+  min_focus_block_break_minutes: 15
+  update_profile_confidence_threshold: 0.6
+
+# --- Task Prioritizer ---
+task_prioritizer:
+  weights:
+    priority: 0.5
+    deadline: 0.35
+    dependencies: 0.1
+    postponed: 0.05
+  default_user_energy_pattern:
+    0: 0.0
+    1: 0.0
+    2: 0.0
+    3: 0.0
+    4: 0.0
+    5: 0.3
+    6: 0.4
+    7: 0.5
+    8: 0.7
+    9: 0.9
+    10: 1.0
+    11: 0.9
+    12: 0.7
+    13: 0.6
+    14: 0.7
+    15: 0.8
+    16: 0.7
+    17: 0.6
+    18: 0.5
+    19: 0.4
+    20: 0.3
+    21: 0.2
+    22: 0.1
+    23: 0.0
+
+# --- Constraint Solver ---
+solver:
+  time_limit: 30.0
+  objective_weights:
+    priority: 10
+    energy_match: 5
+    start_time: 1
+
+# --- Adapters ---
+rag_adapter:
+  placeholder: true
+
+device_adapter:
+  default_source: "MOCK"
+
+# --- Services ---
+wearables: {}
+analytics: {}
+rl_engine:
+  adaptation_step_size: 0.1
+feedback_storage: {}
+feedback_nlp: {}
+
+# --- Scheduler ---
+scheduler: {}

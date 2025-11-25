@@ -1,0 +1,6 @@
+- [] pagination
+- [] response mapping
+- [] ordering and sorting
+- [] documentation
+- [] schema validation
+- [] correct status codes

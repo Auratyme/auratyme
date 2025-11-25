@@ -1,0 +1,40 @@
+services:
+  schedules:
+    build:
+      context: ../../
+      dockerfile: ./microservices/schedules/Dockerfile
+      target: dev
+    env_file:
+      - .env
+    volumes:
+      - ./src:/usr/src/app/microservices/schedules/src
+      - ./test:/usr/src/app/microservices/schedules/test
+      - ./@types:/usr/src/app/microservices/schedules/@types
+      - ../../libs/ts:/usr/src/app/libs/ts
+    depends_on:
+      schedules-db:
+        condition: service_healthy
+      # broker:
+      #   condition: service_healthy
+    healthcheck:
+      test: node ./healthcheck.js
+      timeout: 10s
+      start_period: 15s
+    ports:
+      - 3000:5000
+
+  schedules-db:
+    build:
+      context: ./database
+    env_file:
+      - ./database/.env
+    volumes:
+      - schedules-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+      timeout: 30s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  schedules-db-data:

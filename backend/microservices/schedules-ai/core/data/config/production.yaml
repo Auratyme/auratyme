@@ -1,0 +1,29 @@
+# --- Logging ---
+logging:
+  level: WARNING
+
+# --- API Server ---
+server:
+  cors_origins:
+    - "https://app.auratyme.com"
+
+# --- LLM Engine ---
+llm:
+  temperature: 0.5
+  max_retries: 5
+  retry_delay: 2.0
+
+# --- Constraint Solver ---
+solver:
+  time_limit: 60.0
+
+# --- Adapters ---
+rag_adapter:
+  placeholder: false
+
+device_adapter:
+  default_source: "FITBIT"
+
+# --- Services ---
+analytics: {}
+feedback_storage: {}

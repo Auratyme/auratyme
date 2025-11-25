@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package user;
+
+enum SortType {
+  ASC = 0;
+  DESC = 1;
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+}
+
+enum UsersOrderBy {
+  NAME = 0;
+  CREATED_AT = 1;
+  UPDATED_AT = 2;
+}
+
+message FindOptions {
+  optional uint32 limit = 1;
+  optional uint32 page = 2;
+  optional UsersOrderBy orderBy = 3;
+  optional SortType sortBy = 4;
+}
+
+message FindOneWhere {
+  string id = 1;
+}
+
+message UpdateWhere {
+  string id = 1;
+}
+message UpdateFields {
+  optional string name = 1;
+}
+
+message RemoveWhere {
+  string id = 1;
+}
+
+service UsersService {
+  rpc Find (UsersFindRequest) returns (UsersFindResponse) {}
+  rpc FindOne (UserFindOneRequest) returns (User) {}
+  rpc Create (UserCreateRequest) returns (User) {}
+  rpc Update (UserUpdateRequest) returns (User) {}
+  rpc Remove (UserRemoveRequest) returns (User) {}
+}
+
+message UsersFindRequest {
+  optional FindOptions options = 1;
+}
+message UsersFindResponse {
+  repeated User users = 1;
+}
+
+message UserFindOneRequest {
+  FindOneWhere where = 1;
+}
+
+message UserCreateRequest {
+  string id = 1;
+  string name = 2;
+}
+
+message UserUpdateRequest {
+  UpdateWhere where = 1;
+  optional UpdateFields fields = 2;
+}
+
+message UserRemoveRequest {
+  RemoveWhere where = 1;
+}

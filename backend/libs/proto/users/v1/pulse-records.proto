@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pulse_record;
+
+service PulseRecordsService {
+  rpc Test(TestRequest) returns (TestRespone) {}
+}
+
+message TestRequest {
+  string id = 1;
+}
+message TestRespone {
+  string id = 1;
+}

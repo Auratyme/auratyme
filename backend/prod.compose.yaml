@@ -1,0 +1,53 @@
+name: auratyme
+
+include:
+  - ./microservices/schedules-ai/compose.yaml
+  - ./microservices/schedules/prod.compose.yaml
+  - ./microservices/notifications/prod.compose.yaml
+  - ./microservices/jobs/prod.compose.yaml
+  - ./microservices/users/prod.compose.yaml
+
+services:
+  broker:
+    build:
+      context: ./infrastructure/broker
+      target: prod
+    env_file:
+      - path: ./infrastructure/broker/.env
+        required: true
+    volumes:
+      - broker-data:/var/lib/rabbitmq
+    healthcheck:
+      test: timeout 10s bash -c ':> /dev/tcp/localhost/5672'
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    ports:
+      - 15672:15672
+  reverse-proxy:
+    build:
+      context: ./infrastructure/reverse-proxy
+      target: prod
+    env_file:
+      - path: ./infrastructure/reverse-proxy/.env
+        required: true
+    ports:
+      - 4000:80
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: .
+      target: prod
+      dockerfile: ./microservices/api-gateway/Dockerfile
+    env_file:
+      - path: ./microservices/api-gateway/.env
+        required: true
+    healthcheck:
+      test: node ./healthcheck.js
+      timeout: 10s
+      start_period: 15s
+volumes:
+  broker-data:

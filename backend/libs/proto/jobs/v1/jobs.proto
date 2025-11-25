@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package job;
+
+service JobsService {
+  rpc ScheduleSingle(ScheduleSingleOptions) returns (SingleJob) {}
+  rpc ScheduleCron(ScheduleCronOptions) returns (CronJob) {}
+
+  rpc RescheduleSingle(RescheduleSingleOptions) returns (SingleJob) {}
+  rpc RescheduleCron(RescheduleCronOptions) returns (CronJob) {}
+
+  rpc UnscheduleSingle(UnscheduleSingleOptions) returns (SingleJob) {}
+  rpc UnscheduleCron(UnscheduleCronOptions) returns (CronJob) {}
+}
+
+enum JobType {
+  SINGLE = 0;
+  CRON = 1;
+}
+
+message SingleJob {
+  string id = 1;
+  string name = 2;
+  string executionDate = 3;
+  JobType type = 4;
+}
+message CronJob {
+  string id = 1;
+  string name = 2;
+  string cron = 3;
+  JobType type = 4;
+}
+
+message ScheduleSingleOptions {
+  string name = 2;
+  string executionDate = 3;
+  string ackEventName = 4;
+  map<string, string> payload = 5;
+}
+message ScheduleCronOptions {
+  string name = 2;
+  string cron = 3;
+  string ackEventName = 4;
+  map<string, string> payload = 5;
+}
+
+message RescheduleSingleOptions {
+  string id = 1;
+  string executionDate = 2;
+}
+message RescheduleCronOptions {
+  string id = 1;
+  string cron = 2;
+}
+
+message UnscheduleSingleOptions {
+  string id = 1;
+}
+message UnscheduleCronOptions {
+  string id = 1;
+}

@@ -1,0 +1,24 @@
+.env
+node_modules
+.github/
+dist
+
+### python ###
+
+# byte-compiled, optimized, DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# huggingface cache 
+schedules-ai/schedules-ai/cache
+
+# data
+schedules-ai/core/data/processed/
+
+### react-native ###
+.expo
+__generated__
+
+.venv
+.vscode

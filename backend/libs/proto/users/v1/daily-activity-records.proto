@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package daily_activity_record;
+
+service DailyActivityRecordsService {
+  rpc Test(TestRequest) returns (TestRespone) {}
+}
+
+message TestRequest {
+  string id = 1;
+}
+message TestRespone {
+  string id = 1;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@nestjs/microservices": "^11.1.8",
+    "rxjs": "^7.8.2"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*"
+  }
+}
