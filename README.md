@@ -6,14 +6,14 @@ Dodatkowo dostępny jest panel analityczny do testowania i generowania harmonogr
 
 ---
 
-## Panel analityczny (ważne — testowanie i demonstracja)
-
 ## **[🚀 Panel Analityczny](https://srv1153046.hstgr.cloud:8501/)** — Przetestuj🌐!!! 
+
 
 Uwaga: udostępniamy publicznie zahostowany Panel analityczny który:
 - analizuje zależności i metryki w wygenerowanych harmonogramach,
 - pomaga odkrywać wzorce i zależności,
 - wspiera rozwój i optymalizację modeli AI oraz algorytmów planowania poprzez zbieranie metryk i informacji zwrotnych.
+
 
 ---
 
