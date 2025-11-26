@@ -4,7 +4,11 @@ Auratyme to aplikacja służąca do planowania i zarządzania harmonogramami, ws
 Projekt składa się z dwóch głównych części: backendu (API i logika biznesowa) oraz aplikacji mobilnej.  
 Dodatkowo dostępny jest panel analityczny do testowania i generowania harmonogramów przez AI.
 
+---
+
 ## Panel analityczny (ważne — testowanie i demonstracja)
+
+## **[🚀 Panel Analityczny](https://srv1153046.hstgr.cloud:8501/)** — Przetestuj🌐!!! 
 
 Uwaga: udostępniamy publicznie zahostowany Panel analityczny który:
 - analizuje zależności i metryki w wygenerowanych harmonogramach,
