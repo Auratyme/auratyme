@@ -6,7 +6,7 @@ Dodatkowo dostępny jest panel analityczny do testowania i generowania harmonogr
 
 ---
 
-## **[🚀 Panel Analityczny](https://srv1153046.hstgr.cloud:8501/)** — Przetestuj🌐!!! 
+## **[🚀 Panel Analityczny](https://srv1153046.hstgr.cloud/schedules-ai)** — Przetestuj🌐!!! 
 
 
 Uwaga: udostępniamy publicznie zahostowany Panel analityczny który:
